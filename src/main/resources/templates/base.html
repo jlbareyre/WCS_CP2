@@ -1,75 +1,73 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<head>
+  <meta charset="UTF-8" />
 
-    <title>KIAKWA - mais il est ou b#rd#ld#m#rd€ ?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-    <!-- BOOTSTRAP -->
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
-      crossorigin="anonymous"
-    />
+  <title>KIAKWA - mais il est ou b#rd#ld#m#rd€ ?</title>
 
-    <link href="/css/index.css" rel="stylesheet" th:href="@{/css/index.css}" />
-  </head>
+  <!-- BOOTSTRAP -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
 
-  <body>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col">
-          <h1 th:text="|Hello ${nom}|">Bonjour</h1>
-        </div>
-      </div>
+  <link href="/css/index.css" rel="stylesheet" th:href="@{/css/index.css}" />
+</head>
 
-      <div class="row">
-        <div class="col ml-1 mr-1" style="background-color: lightgreen;">
-          <h2>Liste de matériel</h2>
-          <materiel th:each="unMat : ${materiel}">
-            <p hidden th:text="${unMat.matId}"></p>
-            <p th:text="${unMat.nomMat}"></p>
-            <p th:text="${unMat.detail}"></p>
-          </materiel>
-          <hr />
-          <div class="form2" name="newMateriel">
-            <form action="#" method="POST" th:action="@{/materiel}" class="register-form">
-              <input hidden th:name="userId" th_id="userId" th:value="${userId}" />
-              <input
-                type="text"
-                placeholder="matériel"
-                id="matNom"
-                th:id="matNom"
-                th:name="matNom"
-              /><br />
-              <textarea placeholder="detail" id="detail" th:id="detail" th:name="detail"></textarea>
-              <button>Add</button>
-            </form>
-          </div>
-          <div>&nbsp;</div>
-        </div>
-        <div class="col"></div>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <h1 th:text="|Hello ${nom}|">Bonjour</h1>
       </div>
     </div>
 
-    <!-- BOOTSTRAP -->
-    <script
-      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-      integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+    <div class="row">
+      <div class="col ml-1 mr-1" style="background-color: lightgreen;">
+        <p class="h3">Liste de matériel</p>
+
+        <div class="row border rounded m-1" th:each="unMat : ${materiel}">
+          <div class="col col-md-2 mt-2">
+            <a class="btn btn-outline-danger btn-sm" th:href="@{/deleteMateriel/{id}(id = ${unMat.matId})}">Del</a>
+          </div>
+          <div class="col cold-md-8">
+            <p hidden th:text="${unMat.matId}"></p>
+            <p class="h5" th:text="${unMat.nomMat}"></p>
+            <p class="h6" th:text="${unMat.detail}"></p>
+          </div>
+          <div class="col col-md-2 mt-2">
+            <a class="btn btn-outline-danger btn-sm" th:href="@{/materiel/{id}(id = ${unMat.matId})}"
+              style="color: inherit;">Détail</a>
+          </div>
+        </div>
+        <hr />
+        <div name="newMateriel">
+          <form action="#" method="POST" th:action="@{/materiel}" class="register-form">
+            <input hidden th:name="userId" th_id="userId" th:value="${userId}" />
+            <input class="form-control" type="text" placeholder="nom du matériel" id="matNom" th:id="matNom"
+              th:name="matNom" /><br />
+            <textarea class="form-control mb-2" placeholder="Descriptif" id="detail" th:id="detail"
+              th:name="detail"></textarea>
+            <button type="submit" class="btn btn-success">Ajouter ce matériel</button>
+          </form>
+        </div>
+        <div>&nbsp;</div>
+      </div>
+      <div class="col"></div>
+    </div>
+  </div>
+
+  <!-- BOOTSTRAP -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
+</body>
+
 </html>

@@ -9,5 +9,4 @@ public class KiakwaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(KiakwaApplication.class, args);
 	}
-
 }
