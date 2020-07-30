@@ -37,6 +37,8 @@ public class KiakwaController {
 
         model.addAttribute("nom", user.getName());
         model.addAttribute("user", user);
+        model.addAttribute("userId", user.getUserID().toString());
+
 
         List<Materiel> ListMateriel = materielRepo.findAll().stream().filter(m -> user.equals(m.getUser()))
                 .collect(Collectors.toList());

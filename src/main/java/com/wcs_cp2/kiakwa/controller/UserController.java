@@ -34,14 +34,16 @@ public class UserController {
             model.addAttribute("err", "exists");
             return "index";
         } else {
+
             User user = new User(name, pass, mail, "BaseUser");
             userRepo.save(user);
+            
+            user = userRepo.findAll().stream().filter(u -> name.equals(u.getName())).findAny().get();
 
             model.addAttribute("nom", user.getName());
             model.addAttribute("userId", user.getUserID().toString());
 
-            List<Materiel> ListMateriel = materielRepo.findAll().stream().filter(m -> user.equals(m.getUser()))
-                    .collect(Collectors.toList());
+            List<Materiel> ListMateriel = null;
             model.addAttribute("materiel", ListMateriel);
 
             return "base";

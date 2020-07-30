@@ -27,6 +27,7 @@
             <div class="col-8">
                 <form action="#" method="POST" th:action="@{/materiel}" class="row">
                     <input hidden th:name="userId" th_id="userId" th:value="${userId}" />
+                    <input hidden th:name="matId" th_id="matId" th:value="${materiel.matId}" />
                     <input class="form-control" type="text" placeholder="nom du matériel" id="matNom" th:id="matNom"
                         th:name="matNom" th:value="${materiel.nomMat}" /><br />
                     <textarea class="form-control mb-2" placeholder="Descriptif" id="detail" th:id="detail"

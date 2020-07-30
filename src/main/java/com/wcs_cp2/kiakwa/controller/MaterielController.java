@@ -36,7 +36,8 @@ public class MaterielController {
     private EmpruntRepository empruntRepo;    
 
     @PostMapping("/materiel")
-    public String newMateriel(Model model, @ModelAttribute("userId") String userId,
+    public String newMateriel(Model model, 
+            @ModelAttribute("matId") String matId, @ModelAttribute("userId") String userId,
             @ModelAttribute("matNom") String matNom, @ModelAttribute("detail") String detail, 
             RedirectAttributes ra) {
 
@@ -54,7 +55,14 @@ public class MaterielController {
 
         User user = userRepo.findById(UUID.fromString(userId)).get();
 
-        Materiel mat = new Materiel(UUID.randomUUID(), newName, "", detail, user);
+        Materiel mat;
+        if ( (matId == null) || (matId.equals("") ) ) {
+            mat = new Materiel(UUID.randomUUID(), newName, "", detail, user);
+        } else {
+            mat = materielRepo.findById( UUID.fromString(matId) ).get();
+            mat.setNomMat(newName);
+            mat.setDetail(detail);
+        }
 
         materielRepo.save(mat);
 
