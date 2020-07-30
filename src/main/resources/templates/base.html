@@ -19,16 +19,16 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col">
-        <h1 th:text="|Hello ${nom}|">Bonjour</h1>
+        <h1 th:text="|Bonjour ${nom}|">Bonjour</h1>
       </div>
     </div>
 
     <div class="row">
-      <div class="col ml-1 mr-1" style="background-color: lightgreen;">
-        <p class="h3">Liste de matériel</p>
+      <div class="col ml-1 mr-1" style="background-color: #4caf50;">
+        <p class="h4">Liste de matériel</p>
 
-        <div class="row border rounded m-1" th:each="unMat : ${materiel}">
-          <div class="col col-md-2 mt-2">
+        <div class="row border rounded m-1" th:each="unMat : ${materiel}" style="background-color: white;">
+          <div class="col col-md-2 mt-2 align-items-center">
             <a class="btn btn-outline-danger btn-sm" th:href="@{/deleteMateriel/{id}(id = ${unMat.matId})}">Del</a>
           </div>
           <div class="col cold-md-8">
@@ -36,13 +36,14 @@
             <p class="h5" th:text="${unMat.nomMat}"></p>
             <p class="h6" th:text="${unMat.detail}"></p>
           </div>
-          <div class="col col-md-2 mt-2">
-            <a class="btn btn-outline-danger btn-sm" th:href="@{/materiel/{id}(id = ${unMat.matId})}"
+          <div class="col col-md-2 mt-2 align-items-center">
+            <a class="btn btn-outline-success btn-sm" th:href="@{/materiel/{id}(id = ${unMat.matId})}"
               style="color: inherit;">Détail</a>
           </div>
         </div>
         <hr />
         <div name="newMateriel">
+          <p class="h4">Nouveau matériel</p>
           <form action="#" method="POST" th:action="@{/materiel}" class="register-form">
             <input hidden th:name="userId" th_id="userId" th:value="${userId}" />
             <input class="form-control" type="text" placeholder="nom du matériel" id="matNom" th:id="matNom"

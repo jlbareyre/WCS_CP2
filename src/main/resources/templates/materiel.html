@@ -17,14 +17,66 @@
 
 <body>
     <div class="container-fluid">
-        <form action="#" method="POST" th:action="@{/materiel}" class="register-form">
-            <input hidden th:name="userId" th_id="userId" th:value="${userId}" />
-            <input class="form-control" type="text" placeholder="nom du matériel" id="matNom" th:id="matNom"
-                th:name="matNom" /><br />
-            <textarea class="form-control mb-2" placeholder="Descriptif" id="detail" th:id="detail"
-                th:name="detail"></textarea>
-            <button type="submit" class="btn btn-success">Ajouter ce matériel</button>
-        </form>
+        <div class="row">
+            <a class="col" th:href="@{'/base?userId=' + ${userId}}">Retour</a>
+
+        </div>
+
+        <div class="row">
+            <div class="col-1">&nbsp;</div>
+            <div class="col-8">
+                <form action="#" method="POST" th:action="@{/materiel}" class="row">
+                    <input hidden th:name="userId" th_id="userId" th:value="${userId}" />
+                    <input class="form-control" type="text" placeholder="nom du matériel" id="matNom" th:id="matNom"
+                        th:name="matNom" th:value="${materiel.nomMat}" /><br />
+                    <textarea class="form-control mb-2" placeholder="Descriptif" id="detail" th:id="detail"
+                        th:name="detail" th:text="${materiel.detail}"></textarea>
+                    <button type="submit" class="btn btn-info btn-sm float-right">Enregistrer</button>
+                </form>
+            </div>
+            <div class="col-3">&nbsp;</div>
+        </div>
+
+        <div class="row">
+            <div class="col-1">&nbsp;</div>
+            <p class="h3">Nouvel emprunt</p>
+            <div class="col-8">
+                <form action="#" method="POST" th:action="@{/emprunt}">
+                    <input hidden th:name="matId" th_id="matId" th:value="${materiel.matId}" />
+                    <input th:name="qui" th_id="qui" th:value="${qui}" />
+                    <input type="date" id="quand" name="quand" th:value="${quand}" min="2000-01-01" max="2099-12-31">
+                    <button type="submit" class="btn btn-info btn-sm">Ajouter emprunt</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">&nbsp;</div>
+
+        <div class="row">
+            <div class="col-1">&nbsp;</div>
+            <div class="col-3 h4">Emprunteur</div>
+            <div class="col-2 h4">emprunté le</div>
+            <div class="col-2 h4">rendu le</div>
+            <div class="col-2 h4">&nbsp;</div>
+            <div class="col-2 h4">&nbsp;</div>
+        </div>
+        <div class="row" th:each="emp : ${emprunts}">
+            <div class="col-1">&nbsp;</div>
+            <div class="col-3">
+                <p class="card-text" th:text="|Emprunté par ${emp.qui}|"></p>
+            </div>
+            <div class="col-2">
+                <p class="card-text" th:text="${#dates.format(emp.quand, 'dd-MM-yyyy')}"></p>
+            </div>
+            <div class="col-2">
+                <p class="card-text" th:text="${emp.retour} ? ${#dates.format(emp.retour, 'dd-MM-yyyy')}: 'pas rendu'"></p>
+            </div>
+            <div class="col-2">
+                <a th:href="@{'/recupEmprunt/' + ${emp.eId}}" th:if="!${emp.retour}"> récupérer </a>
+            </div>
+            <div class="col-2">&nbsp;</div>
+        </div>
+
     </div>
 
     <!-- BOOTSTRAP -->
@@ -37,6 +89,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
+    <script>
+        document.getElementById("quand").value = new Date().toISOString().slice(0, 10);
+    </script>
 </body>
 
 </html>
